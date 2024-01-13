@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
+import axios from 'axios';
 
 function App() {
   const [zipCode, setZipCode] = useState('');
@@ -8,9 +9,47 @@ function App() {
     setZipCode(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const fetchCoordinates = async (zip) => {
+    const geocodingApiUrl = `https://geocode.maps.co/search?q=${zip}&api_key=65a2c015744a8957259296ehn9052f3`;
+  
+    try {
+      const response = await axios.get(geocodingApiUrl);
+      const { lat, lon } = response.data[0];
+      return { latitude: lat, longitude: lon };
+    } catch (error) {
+      console.error('Error fetching coordinates:', error);
+      return null;
+    }
+  };
+
+  const testFetchCoordinates = () => {
+    const testZipCode = '22947';
+    console.log(fetchCoordinates(testZipCode));
+  };
+
+  const fetchWeatherData = async (latitude, longitude) => {
+    const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`;
+
+    try {
+      const response = await axios.get(weatherApiUrl);
+      console.log('Weather data:', response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      return null;
+    }
+  };
+  
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Submitted Zip Code:', zipCode);
+    const coordinates = await fetchCoordinates(zipCode);
+    if (coordinates) {
+      await fetchWeatherData(coordinates.latitude, coordinates.longitude);
+      console.log('Weather data fetched');
+    } else {
+      console.log('Unable to fetch coordinates for the given zip code');
+    }
   };
 
   return (
@@ -26,8 +65,12 @@ function App() {
         />
         <button type="submit">Submit</button>
       </form>
+
+      {/* Test Button */}
+      <button onClick={testFetchCoordinates}>Test Fetch Coordinates</button>
     </div>
   );
+
 }
 
 export default App;
