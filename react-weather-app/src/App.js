@@ -14,7 +14,7 @@ function App() {
   };
 
   const fetchCoordinates = async (zip) => {
-    const geocodingApiUrl = `https://geocode.maps.co/search?q=${zip}&api_key=65a2c015744a8957259296ehn9052f3`;
+    const geocodingApiUrl = `https://geocode.maps.co/search?postalcode=${zip}&country=US&api_key=65a2c015744a8957259296ehn9052f3`;
   
     try {
       const response = await axios.get(geocodingApiUrl);
