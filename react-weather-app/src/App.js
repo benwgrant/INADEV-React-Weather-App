@@ -31,12 +31,12 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
 
   const fetchWeatherData = async (latitude, longitude) => {
-    const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`;
-
+    const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,cloud_cover,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York`;
+    // const weatherApiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York';
     try {
       const response = await axios.get(weatherApiUrl);
-      console.log('Weather data:', response.data);
       setWeatherData(response.data);
+      console.log('Weather data:', response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching weather data:', error);
@@ -70,8 +70,8 @@ function App() {
         <button type="submit">Submit</button>
       </form>
 
-      {/* Test Button
-      <button onClick={testFetchCoordinates}>Test Fetch Coordinates</button> */}
+      {/* Test Button */}
+      {/* <button onClick={testFetchCoordinates}>Test Fetch Coordinates</button> */}
 
       <WeatherData data={weatherData} />
     </div>
