@@ -44,8 +44,43 @@ const WeatherData = ({ data, zipcode }) => {
     99: "Thunderstorm with heavy hail"
 };
 
+const weatherIcons = {
+    0: "sun.png",
+    1: "sun.png",
+    2: "cloudy.png",
+    3: "cloud.png",
+    45: "haze.png",
+    48: "haze.png",
+    51: "rain.png",
+    53: "rain.png",
+    55: "rain.png",
+    56: "hail.png",
+    57: "hail.png",
+    61: "rain.png",
+    63: "rain.png",
+    65: "rain.png",
+    66: "hail.png",
+    67: "hail.png",
+    71: "snowy.png",
+    73: "snowy.png",
+    75: "snowy.png",
+    77: "snowy.png",
+    80: "rain.png",
+    81: "rain.png",
+    82: "rain.png",
+    85: "snowy.png",
+    86: "snowy.png",
+    95: "thunderstorm.png",
+    96: "thunderstorm.png",
+    99: "thunderstorm.png"
+};
+
+const weatherIcon = weatherIcons[code] || 'cloudy.png';
+
+
 return (
     <div className="weather-widget">
+    <img src={`/weather-icons/${weatherIcon}`} alt="Weather Icon" />
       <h2>Weather for {zipcode}: {weatherCodes[code]}</h2>
       <div className="weather-details">
         <div className="weather-box">

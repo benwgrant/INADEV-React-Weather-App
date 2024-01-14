@@ -24,6 +24,12 @@
   color: white;
 }
 
+.weather-widget img {
+  width: 100px;
+  height: auto;
+  margin: 5px 0;
+}
+
 .App-link {
   color: #61dafb;
 }
