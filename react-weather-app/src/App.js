@@ -1,5 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
+import WeatherData from './WeatherData';
 import axios from 'axios';
 
 function App() {
@@ -27,12 +28,15 @@ function App() {
     console.log(fetchCoordinates(testZipCode));
   };
 
+  const [weatherData, setWeatherData] = useState(null);
+
   const fetchWeatherData = async (latitude, longitude) => {
     const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`;
 
     try {
       const response = await axios.get(weatherApiUrl);
       console.log('Weather data:', response.data);
+      setWeatherData(response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching weather data:', error);
@@ -55,7 +59,7 @@ function App() {
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
-        <label htmlFor="zipCode">Enter Zip Code:</label>
+        <label htmlFor="zipCode">Enter Zip Code: </label>
         <input 
           type="text" 
           id="zipCode" 
@@ -66,8 +70,10 @@ function App() {
         <button type="submit">Submit</button>
       </form>
 
-      {/* Test Button */}
-      <button onClick={testFetchCoordinates}>Test Fetch Coordinates</button>
+      {/* Test Button
+      <button onClick={testFetchCoordinates}>Test Fetch Coordinates</button> */}
+
+      <WeatherData data={weatherData} />
     </div>
   );
 
