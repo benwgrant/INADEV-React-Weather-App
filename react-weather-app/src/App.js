@@ -58,20 +58,21 @@ function App() {
 
   return (
     <div className="App">
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="zipCode">Enter Zip Code: </label>
-        <input 
-          type="text" 
-          id="zipCode" 
-          value={zipCode} 
-          onChange={handleInputChange} 
-          placeholder="Zip Code" 
-        />
-        <button type="submit">Submit</button>
-      </form>
-
-      {/* Test Button */}
-      {/* <button onClick={testFetchCoordinates}>Test Fetch Coordinates</button> */}
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="zipCode">Enter Zip Code:</label>
+            <input 
+              type="text" 
+              id="zipCode" 
+              value={zipCode} 
+              onChange={handleInputChange} 
+              placeholder="Zip Code" 
+            />
+            <button type="submit">Get Weather</button>
+          </div>
+        </form>
+      </div>
 
       <WeatherData data={weatherData} />
     </div>

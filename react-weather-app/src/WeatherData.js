@@ -6,6 +6,7 @@ const WeatherData = ({ data }) => {
   const temperature = data.current.temperature_2m;
   const windSpeed = data.current.wind_speed_10m;
   const humidity = data.current.relative_humidity_2m;
+  const apparent_temperature = data.current.apparent_temperature;
 
   return (
     <div className="weather-widget">
@@ -13,7 +14,9 @@ const WeatherData = ({ data }) => {
       <div className="weather-details">
         <div className="weather-column">
           <h3>Temperature</h3>
-          <p>{temperature} °F</p>
+          <p>{temperature} °F<br />
+          (Feels Like {apparent_temperature} °F)
+          </p>
           {/* Where I can add more data */}
         </div>
         <div className="weather-column">
