@@ -11,6 +11,7 @@ const WeatherData = ({ data, zipcode }) => {
   const rain = data.current.rain;
   const gusts = data.current.wind_gusts_10m;
   const code = data.current.weather_code;
+  const precipitation = data.current.precipitation;
 
   const weatherCodes = {
     0: "Clear sky",
@@ -18,7 +19,7 @@ const WeatherData = ({ data, zipcode }) => {
     2: "Partly cloudy",
     3: "Overcast",
     45: "Fog",
-    48: "Depositing rime fog",
+    48: "Freezing fog",
     51: "Drizzle: Light intensity",
     53: "Drizzle: Moderate intensity",
     55: "Drizzle: Dense intensity",
@@ -35,7 +36,7 @@ const WeatherData = ({ data, zipcode }) => {
     77: "Snow grains",
     80: "Rain showers: Slight intensity",
     81: "Rain showers: Moderate intensity",
-    82: "Rain showers: Violent intensity",
+    82: "Rain showers: Heavy intensity",
     85: "Snow showers slight intensity",
     86: "Snow showers heavy intensity",
     95: "Thunderstorm: Slight or moderate",
@@ -43,29 +44,31 @@ const WeatherData = ({ data, zipcode }) => {
     99: "Thunderstorm with heavy hail"
 };
 
-  return (
+return (
     <div className="weather-widget">
       <h2>Weather for {zipcode}: {weatherCodes[code]}</h2>
       <div className="weather-details">
-        <div className="weather-column">
+        <div className="weather-box">
           <h3>Temperature</h3>
-          <p>{temperature} °F<br />
-          (Feels Like {apparent_temperature} °F)
-          </p>
-          {/* Where I can add more data */}
+          <p>{temperature} °F<br />(Feels Like {apparent_temperature} °F)</p>
         </div>
-        <div className="weather-column">
+        <div className="weather-box">
           <h3>Wind</h3>
-          <p>{windSpeed} MPH<br />
-            (Gusts up to {gusts} MPH)
-          </p>
-          {/* Where I can add more data */}
+          <p>{windSpeed} MPH<br />(Gusts up to {gusts} MPH)</p>
         </div>
-        <div className="weather-column">
+        <div className="weather-box">
           <h3>Humidity</h3>
           <p>{humidity}%</p>
-          {/* Where I can add more data */}
         </div>
+        <div className="weather-box">
+          <h3>Cloud Cover</h3>
+          <p>{cloud_cover}%</p>
+        </div>
+        <div className="weather-box">
+          <h3>Precipitation</h3>
+          <p>{precipitation} Inches</p>
+        </div>
+        
       </div>
     </div>
   );
