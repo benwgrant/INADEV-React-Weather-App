@@ -1,15 +1,18 @@
 import './App.css';
-import './Weather.css';
+import './WeatherData.css';
 import React, { useState } from 'react';
 import WeatherData from './WeatherData';
 import Header from './Header';
 import axios from 'axios';
 
 function App() {
+  // States
   const [zipCode, setZipCode] = useState('');
   const [displayZipCode, setDisplayZipCode] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [isZipCodeValid, setIsZipCodeValid] = useState(true);
+  // Used to limit the number of API calls
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (event) => {
     setZipCode(event.target.value);
@@ -44,14 +47,14 @@ function App() {
     }
   };
 
-  const testFetchCoordinates = () => {
-    const testZipCode = '22947';
-    console.log(fetchCoordinates(testZipCode));
-  };
+  // const testFetchCoordinates = () => {
+  //   const testZipCode = '22947';
+  //   console.log(fetchCoordinates(testZipCode));
+  // };
 
   const fetchWeatherData = async (latitude, longitude) => {
     const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,cloud_cover,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York`;
-    // const weatherApiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York';
+    
     try {
       const response = await axios.get(weatherApiUrl);
       setWeatherData(response.data);
@@ -65,6 +68,15 @@ function App() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // If button has been pressed in the last second, don't allow another submission
+    if (isSubmitting) {
+      console.log('Already submitting');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const coordinates = await fetchCoordinates(zipCode);
     if (coordinates) {
       await fetchWeatherData(coordinates.latitude, coordinates.longitude);
@@ -73,6 +85,10 @@ function App() {
     } else {
       console.log('Unable to fetch coordinates for the given zip code');
     }
+
+    setTimeout(() => {
+      setIsSubmitting(false); // Re-enable the submit button after 1 second
+    }, 1000);
   };
 
   return (
@@ -90,7 +106,7 @@ function App() {
               placeholder="Zip Code" 
               className={!isZipCodeValid ? 'invalid' : ''}
             />
-            <button type="submit">Get Weather</button>
+            <button type="submit" disabled={isSubmitting} className="submit-button">Get Weather</button>
           </div>
           {!isZipCodeValid && <div className="error-message">Invalid zip code</div>}
         </form>
