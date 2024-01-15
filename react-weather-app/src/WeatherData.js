@@ -8,7 +8,6 @@ const WeatherData = ({ data, zipcode }) => {
   const humidity = data.current.relative_humidity_2m;
   const apparent_temperature = data.current.apparent_temperature;
   const cloud_cover = data.current.cloud_cover;
-  const rain = data.current.rain;
   const gusts = data.current.wind_gusts_10m;
   const code = data.current.weather_code;
   const precipitation = data.current.precipitation;
