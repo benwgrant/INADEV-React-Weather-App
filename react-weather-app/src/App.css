@@ -1,3 +1,5 @@
+/* All CSS pertaining to App.js */
+
 .App {
   text-align: center;
 }
@@ -24,11 +26,7 @@
   color: white;
 }
 
-.weather-widget img {
-  width: 100px;
-  height: auto;
-  margin: 5px 0;
-}
+
 
 .App-link {
   color: #61dafb;
@@ -55,7 +53,6 @@ h1 {
   margin: 0;
   font-size: 24px;
 }
-
 
 .form-container {
   margin-bottom: 40px;
@@ -93,73 +90,13 @@ button:hover {
   background-color: #0056b3;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-size: 18px;
+.invalid {
+  border-color: red; /* Highlight input field in red */
 }
 
-.weather-widget {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.weather-widget h2 {
-  color: #333;
-  margin-bottom: 40px;
-}
-
-.weather-details {
-  font-size: 20px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-}
-
-.weather-box {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 200px;
-}
-
-.weather-box h3 {
-  margin-top: 0;
-  color: #333;
-}
-
-.weather-box p {
-  color: #666;
-}
-
-.weather-column {
-  background-color: #fff;
-  border: 1px solid #eee;
-  padding: 15px;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  font-size: 20px;
-}
-
-.weather-column h3 {
-  color: #555;
-  margin-top: 0;
-}
-
-/* This is to stack columns on smaller screens */
-@media (max-width: 768px) {
-  .weather-details {
-    grid-template-columns: 1fr;
-  }
+.error-message {
+  color: red;
+  margin-top: 5px;
 }
 
 

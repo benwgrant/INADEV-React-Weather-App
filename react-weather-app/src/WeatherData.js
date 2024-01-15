@@ -12,10 +12,12 @@ const WeatherData = ({ data, zipcode }) => {
   const gusts = data.current.wind_gusts_10m;
   const code = data.current.weather_code;
   const precipitation = data.current.precipitation;
+  const winddir = data.current.wind_direction_10m;
+  const surface_pressure = data.current.surface_pressure;
 
   const weatherCodes = {
     0: "Clear sky",
-    1: "Mainly clear",
+    1: "Mostly clear",
     2: "Partly cloudy",
     3: "Overcast",
     45: "Fog",
@@ -76,6 +78,9 @@ const weatherIcons = {
 };
 
 const weatherIcon = weatherIcons[code] || 'cloudy.png';
+const val = parseInt((winddir/22.5)+.5);
+const directions = ["N","NNE","NE","ENE","E","ESE", "SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+const compass = directions[(val % 16)];
 
 
 return (
@@ -89,7 +94,7 @@ return (
         </div>
         <div className="weather-box">
           <h3>Wind</h3>
-          <p>{windSpeed} MPH<br />(Gusts up to {gusts} MPH)</p>
+          <p>{windSpeed} MPH {compass}<br />(Gusts up to {gusts} MPH)</p>
         </div>
         <div className="weather-box">
           <h3>Humidity</h3>
@@ -102,6 +107,10 @@ return (
         <div className="weather-box">
           <h3>Precipitation</h3>
           <p>{precipitation} Inches</p>
+        </div>
+        <div className="weather-box">
+          <h3>Surface Pressure</h3>
+            <p>{surface_pressure} hPa</p>
         </div>
         
       </div>
