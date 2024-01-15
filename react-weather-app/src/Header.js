@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <header className="app-header">
       <img src={logo} alt="Logo" className="logo" />
-      <h1>INADEV Weather app</h1>
+      <h1>INADEV Weather Project</h1>
     </header>
   );
 };

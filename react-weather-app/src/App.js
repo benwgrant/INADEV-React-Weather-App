@@ -6,10 +6,13 @@ import Header from './Header';
 import axios from 'axios';
 
 function App() {
+  // States
   const [zipCode, setZipCode] = useState('');
   const [displayZipCode, setDisplayZipCode] = useState('');
   const [weatherData, setWeatherData] = useState(null);
   const [isZipCodeValid, setIsZipCodeValid] = useState(true);
+  // Used to limit the number of API calls
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleInputChange = (event) => {
     setZipCode(event.target.value);
@@ -65,6 +68,15 @@ function App() {
   
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    // If button has been pressed in the last second, don't allow another submission
+    if (isSubmitting) {
+      console.log('Already submitting');
+      return;
+    }
+
+    setIsSubmitting(true);
+
     const coordinates = await fetchCoordinates(zipCode);
     if (coordinates) {
       await fetchWeatherData(coordinates.latitude, coordinates.longitude);
@@ -73,6 +85,10 @@ function App() {
     } else {
       console.log('Unable to fetch coordinates for the given zip code');
     }
+
+    setTimeout(() => {
+      setIsSubmitting(false); // Re-enable the submit button after 1 second
+    }, 1000);
   };
 
   return (
@@ -90,7 +106,7 @@ function App() {
               placeholder="Zip Code" 
               className={!isZipCodeValid ? 'invalid' : ''}
             />
-            <button type="submit">Get Weather</button>
+            <button type="submit" disabled={isSubmitting} className="submit-button">Get Weather</button>
           </div>
           {!isZipCodeValid && <div className="error-message">Invalid zip code</div>}
         </form>

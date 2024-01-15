@@ -90,14 +90,21 @@ button:hover {
   background-color: #0056b3;
 }
 
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed; 
+}
+
 .invalid {
-  border-color: red; /* Highlight input field in red */
+  border-color: red; 
 }
 
 .error-message {
   color: red;
   margin-top: 5px;
 }
+
+
 
 
 @keyframes App-logo-spin {
