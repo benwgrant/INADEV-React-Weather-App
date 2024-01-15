@@ -9,14 +9,31 @@ function App() {
   const [zipCode, setZipCode] = useState('');
   const [displayZipCode, setDisplayZipCode] = useState('');
   const [weatherData, setWeatherData] = useState(null);
+  const [isZipCodeValid, setIsZipCodeValid] = useState(true);
 
   const handleInputChange = (event) => {
     setZipCode(event.target.value);
   };
 
+  // A function to sanitize the zip code, preventing injection attacks
+  const sanitizeZipCode = (zip) => {
+    // A regex to match a 5-digit number
+    const regex = /^[0-9]{5}$/;
+    return regex.test(zip) ? zip : null;
+  };
+
   const fetchCoordinates = async (zip) => {
+    // If not a valid zip code, return null (for injection attack prevention)
+    if (!sanitizeZipCode(zip)) {
+      console.error('Invalid zip code');
+      setIsZipCodeValid(false);
+      return null;
+    }
+
+    // If valid zip code, fetch coordinates
+    setIsZipCodeValid(true);
+
     const geocodingApiUrl = `https://geocode.maps.co/search?postalcode=${zip}&country=US&api_key=65a2c015744a8957259296ehn9052f3`;
-  
     try {
       const response = await axios.get(geocodingApiUrl);
       const { lat, lon } = response.data[0];
@@ -46,7 +63,6 @@ function App() {
     }
   };
   
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const coordinates = await fetchCoordinates(zipCode);
@@ -72,9 +88,11 @@ function App() {
               value={zipCode} 
               onChange={handleInputChange} 
               placeholder="Zip Code" 
+              className={!isZipCodeValid ? 'invalid' : ''}
             />
             <button type="submit">Get Weather</button>
           </div>
+          {!isZipCodeValid && <div className="error-message">Invalid zip code</div>}
         </form>
       </div>
 

@@ -90,6 +90,15 @@ button:hover {
   background-color: #0056b3;
 }
 
+.invalid {
+  border-color: red; /* Highlight input field in red */
+}
+
+.error-message {
+  color: red;
+  margin-top: 5px;
+}
+
 
 @keyframes App-logo-spin {
   from {
