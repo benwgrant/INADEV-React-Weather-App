@@ -9,6 +9,7 @@
   "author": "Ben Grant",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.3.2",
     "express-rate-limit": "^7.1.5"
   }
 }

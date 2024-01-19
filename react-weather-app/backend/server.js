@@ -2,6 +2,7 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
+require('dotenv').config();
 
 const app = express();
 
@@ -11,8 +12,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-const GEOCODING_API_KEY = '65a2c015744a8957259296ehn9052f3';
 
 // Rate limiter
 const limiter = rateLimit({
@@ -36,8 +35,9 @@ app.get('/weather/:zipcode', async (req, res) => {
         const { zipcode } = req.params;
 
         // Get coordinates based on the zip code
-        const geocodingApiUrl = `https://geocode.maps.co/search?postalcode=${zipcode}&country=US&api_key=${GEOCODING_API_KEY}`;
+        const geocodingApiUrl = `https://geocode.maps.co/search?postalcode=${zipcode}&country=US&api_key=${process.env.GEOCODING_API_KEY}`;
         const geoResponse = await axios.get(geocodingApiUrl);
+        // latitude and longitude extracted from response. This is for the Meteo API call
         const { lat, lon } = geoResponse.data[0];
 
         // Then use these coordinates to get the weather data
