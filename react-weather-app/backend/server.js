@@ -4,14 +4,13 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
-app.use(cors());
 
-// const corsOptions = {
-//     origin: 'http://localhost:3000',
-//     optionsSuccessStatus: 200
-// };
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 const GEOCODING_API_KEY = '65a2c015744a8957259296ehn9052f3';
 
