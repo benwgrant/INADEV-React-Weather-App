@@ -1,0 +1,14 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A simple backend microservice to fetch weather from the API. Uses Node.js, express, axios, and cors.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Grant",
+  "license": "ISC",
+  "dependencies": {
+    "express-rate-limit": "^7.1.5"
+  }
+}

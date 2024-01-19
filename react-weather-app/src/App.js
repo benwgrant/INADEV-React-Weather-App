@@ -25,46 +25,16 @@ function App() {
     return regex.test(zip) ? zip : null;
   };
 
-  const fetchCoordinates = async (zip) => {
-    // If not a valid zip code, return null (for injection attack prevention)
-    if (!sanitizeZipCode(zip)) {
-      console.error('Invalid zip code');
-      setIsZipCodeValid(false);
-      return null;
-    }
-
-    // If valid zip code, fetch coordinates
-    setIsZipCodeValid(true);
-
-    const geocodingApiUrl = `https://geocode.maps.co/search?postalcode=${zip}&country=US&api_key=65a2c015744a8957259296ehn9052f3`;
+  const fetchWeatherData = async (zipcode) => {
     try {
-      const response = await axios.get(geocodingApiUrl);
-      const { lat, lon } = response.data[0];
-      return { latitude: lat, longitude: lon };
+        const response = await axios.get(`http://localhost:3001/weather/${zipcode}`);
+        setWeatherData(response.data);
+        console.log('Weather data:', response.data);
     } catch (error) {
-      console.error('Error fetching coordinates:', error);
-      return null;
+        console.error('Error fetching weather data:', error);
+        console.error(error.response.data);
     }
-  };
-
-  // const testFetchCoordinates = () => {
-  //   const testZipCode = '22947';
-  //   console.log(fetchCoordinates(testZipCode));
-  // };
-
-  const fetchWeatherData = async (latitude, longitude) => {
-    const weatherApiUrl = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,rain,showers,snowfall,weather_code,cloud_cover,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&timezone=America%2FNew_York`;
-    
-    try {
-      const response = await axios.get(weatherApiUrl);
-      setWeatherData(response.data);
-      console.log('Weather data:', response.data);
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
-      return null;
-    }
-  };
+};
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -75,16 +45,19 @@ function App() {
       return;
     }
 
+    if (!sanitizeZipCode(zipCode)) {
+      console.error('Invalid zip code');
+      setIsZipCodeValid(false);
+      return null;
+    }
+
+    // If valid zip code, fetch coordinates
+    setIsZipCodeValid(true);
+
     setIsSubmitting(true);
 
-    const coordinates = await fetchCoordinates(zipCode);
-    if (coordinates) {
-      await fetchWeatherData(coordinates.latitude, coordinates.longitude);
-      console.log('Weather data fetched');
-      setDisplayZipCode(zipCode);
-    } else {
-      console.log('Unable to fetch coordinates for the given zip code');
-    }
+    await fetchWeatherData(zipCode);
+    setDisplayZipCode(zipCode);
 
     setTimeout(() => {
       setIsSubmitting(false); // Re-enable the submit button after 1 second
