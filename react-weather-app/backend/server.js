@@ -6,17 +6,19 @@ require('dotenv').config();
 
 const app = express();
 
-const corsOptions = {
-    origin: 'http://localhost:3000',
-    optionsSuccessStatus: 200
-};
+// These options limit resource sharing to specifically port 3000
+// It is best practice to limit CORS to only the ports you need
+// const corsOptions = {
+//     origin: 'http://localhost:3000',
+//     optionsSuccessStatus: 200
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Rate limiter
 const limiter = rateLimit({
     windowMs: 60000, // 1 minute window
-    max: 30, // 30 requests per minute (from an IP)
+    max: 30, // 30 requests per minute (per IP)
     message: "Too many requests from this IP, try again in a minute"
 });
 

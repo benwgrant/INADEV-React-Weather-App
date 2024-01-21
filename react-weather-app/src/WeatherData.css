@@ -68,7 +68,7 @@
     margin-top: 0;
   }
   
-  /* This is to stack columns on smaller screens */
+  /* This is to stack widgets on smaller screens */
   @media (max-width: 768px) {
     .weather-details {
       grid-template-columns: 1fr;
