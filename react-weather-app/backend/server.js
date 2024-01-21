@@ -8,12 +8,12 @@ const app = express();
 
 // These options limit resource sharing to specifically port 3000
 // It is best practice to limit CORS to only the ports you need
-// const corsOptions = {
-//     origin: 'http://localhost:3000',
-//     optionsSuccessStatus: 200
-// };
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200
+};
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Rate limiter
 const limiter = rateLimit({
